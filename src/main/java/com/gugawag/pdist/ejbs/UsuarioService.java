@@ -6,6 +6,8 @@ import com.gugawag.pdist.model.Usuario;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+
+import java.util.Arrays;
 import java.util.List;
 
 @Stateless(name = "usuarioService")
@@ -18,16 +20,28 @@ public class UsuarioService {
     @EJB
     private MensagemDAO mensagemDao;
 
+    private static final List<String> PALAVROES = Arrays.asList("bobao", "feio", "lerdo");
+
+
     public List<Usuario> listar() {
         return usuarioDao.listar();
     }
 
-    public void inserir(long id, String nome) {
+    public List<Mensagem> listarMensagens() {
+        return mensagemDao.listar();
+    }
+
+    public void inserir(long id, String nome, long idMensagem, String mensagem) {
         Usuario novoUsuario = new Usuario(id, nome);
         usuarioDao.inserir(novoUsuario);
 
-        Mensagem mensagem = new Mensagem();
-//        mensagemDao.inserir(mensagem);
+        Mensagem novaMensagem = new Mensagem(idMensagem, mensagem);
+        mensagemDao.inserir(novaMensagem);
+        for (String palavrao : PALAVROES) {
+            if (mensagem.toLowerCase().contains(palavrao.toLowerCase())) {
+                throw new IllegalArgumentException("Mensagem contém palavras inadequadas!");
+            }
+        }
         if (id==3L) {
             throw new RuntimeException("Menor de idade não permitido!");
         }

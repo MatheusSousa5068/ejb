@@ -1,6 +1,7 @@
 package com.gugawag.pdist.servlets;
 
 import com.gugawag.pdist.ejbs.UsuarioService;
+import com.gugawag.pdist.model.Mensagem;
 import com.gugawag.pdist.model.Usuario;
 
 import javax.ejb.EJB;
@@ -22,11 +23,19 @@ public class UsuarioServlet extends javax.servlet.http.HttpServlet {
             case "1": {
                 long id = Integer.parseInt(request.getParameter("id"));
                 String nome = request.getParameter("nome");
-                usuarioService.inserir(id, nome);
+                long idMensagem = Integer.parseInt(request.getParameter("id-mensagem"));
+                String mensagem = request.getParameter("mensagem");
+                usuarioService.inserir(id, nome, idMensagem, mensagem);
             }
             case "2": {
                 for(Usuario usuario: usuarioService.listar()){
                     resposta.println(usuario.getNome());
+                }
+                break;
+            }
+            case "3": {
+                for(Mensagem mensagem: usuarioService.listarMensagens()){
+                    resposta.println(mensagem.getMensagem());
                 }
                 break;
             }

@@ -13,7 +13,9 @@
     <br>
     <form action="usuario.do" method="GET">
         Id: <input name="id"><br>
-        Nome: <input name="nome">
+        Nome: <input name="nome"><br>
+        Id Mensagem: <input name="id-mensagem"><br>
+        Mensagem: <input name="mensagem">
         <input type="hidden" name="oper" value="1" />
         <button>Inserir</button>
     </form>
@@ -22,6 +24,11 @@
         <input type="hidden" name="oper" value="2" />
         <button>Listar Usuários</button>
     </form>
+    <form action="usuario.do" method="GET">
+        <input type="hidden" name="oper" value="3" />
+        <button>Listar Mensageens</button>
+    </form>
+
 
 </body>
 </html>
